@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>A Tia Lendária: Versão Ultra Diamond</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Lora:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@500&display=swap">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --pitch: #064E3B;
+            --samsung-blue: #034EA2;
+            --cream: #FFFDF5;
+            --charcoal: #1F2937;
+            --petal: #FBCFE8;
+            --taupe: #A8A29E;
+            --transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --gold: #E5C760;
+                --pitch: #022c20;
+                --samsung-blue: #1e6bc4;
+                --cream: #0a0a0a;
+                --charcoal: #f3f4f6;
+                --petal: #fbcfe8;
+                --taupe: #4b5563;
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --gold: #E5C760;
+            --pitch: #022c20;
+            --samsung-blue: #1e6bc4;
+            --cream: #0a0a0a;
+            --charcoal: #f3f4f6;
+            --petal: #fbcfe8;
+            --taupe: #4b5563;
+        }
+
+        body {
+            background-color: var(--cream);
+            color: var(--charcoal);
+            font-family: 'Lora', serif;
+            transition: var(--transition);
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Outfit', sans-serif;
+            text-wrap: balance;
+        }
+
+        .font-stats {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .text-gold { color: var(--gold); }
+        .bg-gold { background-color: var(--gold); }
+        .bg-pitch { background-color: var(--pitch); }
+        .bg-samsung { background-color: var(--samsung-blue); }
+        .bg-cream { background-color: var(--cream); }
+        .text-charcoal { color: var(--charcoal); }
+
+        .hero-gradient {
+            background: radial-gradient(circle at center, var(--petal) 0%, transparent 70%);
+            opacity: 0.4;
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .gold-border {
+            border: 4px double var(--gold);
+        }
+
+        .reveal-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition);
+        }
+
+        .reveal-section.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+            z-index: 100;
+            border-radius: 2px;
+        }
+
+        .football {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0.3;
+        }
+
+        .samsung-glow {
+            box-shadow: 0 0 30px var(--samsung-blue);
+        }
+
+        .letter-spacing-widest {
+            letter-spacing: 0.2em;
+        }
+
+        .gradient-divider {
+            height: 150px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* TV Animation Styles */
+        .tv-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            aspect-ratio: 16 / 9;
+            background: #1a1a1a;
+            border: 10px solid #333;
+            border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 20px #000;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .tv-screen {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tv-power-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: white;
+            box-shadow: 0 0 10px white;
+            z-index: 20;
+            transition: width 0.4s ease-out;
+        }
+
+        .tv-power-on .tv-power-line {
+            width: 100%;
+        }
+
+        .tv-video {
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease-in;
+            transform: scale(1.1);
+        }
+
+        .tv-power-on .tv-video {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* SIMULATOR STYLES */
+        .sim-panel {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255,255,255,0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .sim-btn {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .sim-btn:active {
+            transform: scale(0.9);
+            filter: brightness(1.2);
+        }
+
+        .btn-tech { background: var(--samsung-blue); color: white; }
+        .btn-marketing { background: var(--gold); color: var(--charcoal); }
+        .btn-love { background: var(--petal); color: var(--charcoal); }
+        .btn-siuu { background: white; color: var(--charcoal); }
+
+        .floating-emoji {
+            position: fixed;
+            pointer-events: none;
+            z-index: 200;
+            font-size: 2rem;
+            animation: floatUp 2s ease-out forwards;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-200px) rotate(360deg); opacity: 0; }
+        }
+
+        .screen-shake {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+
+        .matrix-text {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            color: #0F0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            pointer-events: none;
+            z-index: 150;
+            opacity: 0;
+            overflow: hidden;
+            white-space: pre;
+            transition: opacity 0.5s;
+        }
+
+        /* PATIENCE METER STYLES */
+        .meter-container {
+            width: 100%;
+            max-width: 600px;
+            height: 40px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid rgba(255,255,255,0.3);
+        }
+        .meter-fill {
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, #ef4444, #fbbf24, #22c55e);
+            transition: width 1s ease-in-out;
+        }
+
+        /* TRANSLATOR STYLES - Ultra Diamond Secret Edition */
+        .translator-card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid transparent;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .translator-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        .translator-card.revealed {
+            background: var(--charcoal);
+            color: white;
+            border-color: var(--gold);
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.4);
+        }
+        .translator-card.revealed .corp-label {
+            color: var(--gold) !important;
+            opacity: 0.6;
+        }
+        .translator-card.revealed .corp-text {
+            color: rgba(255,255,255,0.4) !important;
+            text-decoration: line-through;
+        }
+        .translator-truth {
+            max-height: 0;
+            opacity: 0;
+            transition: all 0.5s ease-in-out;
+            overflow: hidden;
+            transform: translateY(20px);
+        }
+        .translator-card.revealed .translator-truth {
+            max-height: 300px;
+            opacity: 1;
+            transform: translateY(0);
+            margin-top: 1.5rem;
+        }
+        .truth-badge {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--charcoal);
+            font-weight: 900;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+            box-shadow: 0 4px 10px rgba(212, 175, 55, 0.4);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        ::selection {
+            background: var(--gold);
+            color: var(--charcoal);
+        }
+
+        .tv-container:hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 28px 65px rgba(0,0,0,0.6), inset 0 0 25px #000;
+        }
+
+        button {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        @media (max-width: 640px) {
+            .tv-container {
+                border-width: 6px;
+                border-radius: 10px;
+            }
+
+            .gold-border {
+                border-width: 3px;
+            }
+
+            .meter-container {
+                height: 32px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        .youtube-placeholder {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            background:
+                radial-gradient(circle at 70% 40%, rgba(125, 60, 180, .28), transparent 45%),
+                linear-gradient(135deg, #090909, #171017);
+            color: white;
+        }
+
+        .yt-icon {
+            width: 70px;
+            height: 48px;
+            border-radius: 14px;
+            background: #ff0033;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+            padding-left: 3px;
+            margin-bottom: 18px;
+            box-shadow: 0 8px 30px rgba(255, 0, 51, .3);
+        }
+
+        .youtube-placeholder h3 {
+            font-size: clamp(1.4rem, 4vw, 2.2rem);
+            margin: 0 0 8px;
+        }
+
+        .youtube-placeholder p {
+            opacity: .7;
+            margin: 0 0 22px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .85rem;
+        }
+
+        .yt-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            color: #111;
+            text-decoration: none;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            padding: 12px 20px;
+            border-radius: 999px;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .yt-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255,255,255,.2);
+        }
+
+        /* REALISTIC MOBILE SMART TV */
+        .smart-tv-wrap {
+            perspective: 1200px;
+        }
+
+        .smart-tv {
+            width: 100%;
+            position: relative;
+            filter: drop-shadow(0 35px 35px rgba(0,0,0,.55));
+            transition: transform .4s ease;
+        }
+
+        .tv-bezel {
+            background: linear-gradient(145deg, #4a4a4a, #111 35%, #2c2c2c 70%, #080808);
+            padding: 13px 13px 16px;
+            border-radius: 20px 20px 12px 12px;
+            box-shadow: inset 0 1px 2px rgba(255,255,255,.25),
+                        inset 0 -5px 12px rgba(0,0,0,.9),
+                        0 5px 0 #080808;
+        }
+
+        .tv-display {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            position: relative;
+            overflow: hidden;
+            border-radius: 5px;
+            background: #000;
+            box-shadow: inset 0 0 35px #000;
+            cursor: pointer;
+        }
+
+        .tv-off-screen,
+        .tv-home-screen {
+            position: absolute;
+            inset: 0;
+            transition: opacity .55s ease, transform .55s ease;
+        }
+
+        .tv-off-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background:
+                radial-gradient(circle, #1a1a1a 0%, #050505 58%, #000 100%);
+            color: #aaa;
+            z-index: 4;
+        }
+
+        .tv-brand {
+            color: #d9d9d9;
+            letter-spacing: .35em;
+            font-family: Outfit, sans-serif;
+            font-size: clamp(.65rem, 2vw, 1rem);
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .power-symbol {
+            font-size: clamp(2rem, 8vw, 4rem);
+            color: #777;
+            margin-bottom: 5px;
+        }
+
+        .tv-off-screen p {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(.55rem, 2vw, .85rem);
+            opacity: .6;
+        }
+
+        .tv-home-screen {
+            opacity: 0;
+            transform: scale(1.04);
+            pointer-events: none;
+            background: #000;
+        }
+
+        .smart-tv.tv-on .tv-off-screen {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .smart-tv.tv-on .tv-home-screen {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+
+        .tv-home-screen::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(255,255,255,.025), rgba(0,0,0,.06));
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .tv-statusbar {
+            position: absolute;
+            top: 8px;
+            left: 12px;
+            right: 12px;
+            z-index: 5;
+            display: flex;
+            justify-content: space-between;
+            font: 700 clamp(.45rem, 1.5vw, .7rem) 'JetBrains Mono', monospace;
+            color: white;
+            text-shadow: 0 1px 3px #000;
+            opacity: .85;
+        }
+
+        .tv-youtube-frame {
+            position: absolute;
+            inset: 0;
+            background: #000;
+        }
+
+        .tv-youtube-frame iframe {
+            width: 100%;
+            height: 100%;
+            display: block;
+            border: 0;
+        }
+
+        .tv-video-loading {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: rgba(0,0,0,.78);
+            color: white;
+            font: 600 clamp(.55rem, 2vw, .8rem) 'JetBrains Mono', monospace;
+            z-index: 6;
+            transition: opacity .4s;
+            pointer-events: none;
+        }
+
+        .loading-spinner {
+            width: 28px;
+            height: 28px;
+            border: 3px solid rgba(255,255,255,.25);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: tvSpin .8s linear infinite;
+        }
+
+        @keyframes tvSpin {
+            to { transform: rotate(360deg); }
+        }
+
+        .tv-home-info {
+            position: absolute;
+            left: 5%;
+            right: 5%;
+            bottom: 5%;
+            z-index: 5;
+            color: white;
+            text-shadow: 0 2px 5px #000;
+            pointer-events: none;
+            font-family: Outfit, sans-serif;
+        }
+
+        .tv-home-info div {
+            font-size: clamp(.45rem, 1.5vw, .7rem);
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 4px;
+        }
+
+        .tv-home-info strong {
+            font-size: clamp(.7rem, 2.5vw, 1.2rem);
+        }
+
+        .live-dot {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #e11;
+            box-shadow: 0 0 8px #f22;
+            margin-right: 5px;
+            animation: livePulse 1.2s infinite;
+        }
+
+        @keyframes livePulse {
+            50% { opacity: .35; }
+        }
+
+        .tv-volume-osd,
+        .tv-brightness-osd {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) scale(.9);
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            background: rgba(0,0,0,.75);
+            border: 1px solid rgba(255,255,255,.2);
+            border-radius: 12px;
+            padding: 10px 14px;
+            color: white;
+            font: 700 .75rem 'JetBrains Mono', monospace;
+            z-index: 10;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .2s, transform .2s;
+            backdrop-filter: blur(8px);
+        }
+
+        .tv-volume-osd.show,
+        .tv-brightness-osd.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .osd-bar {
+            width: 80px;
+            height: 7px;
+            border-radius: 10px;
+            background: #555;
+            overflow: hidden;
+        }
+
+        .osd-bar div {
+            height: 100%;
+            width: 50%;
+            background: var(--gold);
+            transition: width .15s;
+        }
+
+        .tv-bottom {
+            height: 31px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .samsung-logo-small {
+            font: 700 .55rem Outfit, sans-serif;
+            letter-spacing: .25em;
+            color: #bbb;
+        }
+
+        .physical-power {
+            position: absolute;
+            right: 3%;
+            bottom: 2px;
+            border: 0;
+            background: transparent;
+            color: #777;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .tv-led {
+            position: absolute;
+            right: 4%;
+            bottom: 1px;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: #e11;
+            box-shadow: 0 0 7px #e11;
+            transition: .3s;
+        }
+
+        .smart-tv.tv-on .tv-led {
+            background: #31d158;
+            box-shadow: 0 0 8px #31d158;
+        }
+
+        /* Remote */
+        .remote-control {
+            width: min(270px, 78vw);
+            margin: 18px auto 0;
+            padding: 15px;
+            border-radius: 25px;
+            background: linear-gradient(145deg, #343434, #0b0b0b);
+            box-shadow: inset 0 1px 1px rgba(255,255,255,.15),
+                        0 15px 30px rgba(0,0,0,.45);
+            border: 1px solid #4a4a4a;
+            color: white;
+            user-select: none;
+        }
+
+        .remote-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font: 700 .5rem 'JetBrains Mono', monospace;
+            color: #aaa;
+            letter-spacing: .12em;
+            margin: 0 5px 8px;
+        }
+
+        .remote-power-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #d22;
+            box-shadow: 0 0 5px #d22;
+        }
+
+        .remote-power-dot.on {
+            background: #31d158;
+            box-shadow: 0 0 6px #31d158;
+        }
+
+        .remote-power {
+            display: block;
+            width: 43px;
+            height: 43px;
+            margin: 0 auto 12px;
+            border: 1px solid #555;
+            border-radius: 50%;
+            background: #151515;
+            color: #e55;
+            font-size: 20px;
+            box-shadow: inset 0 2px 4px #000;
+        }
+
+        .remote-nav {
+            width: 125px;
+            height: 125px;
+            margin: 0 auto 13px;
+            position: relative;
+        }
+
+        .remote-nav button {
+            position: absolute;
+            width: 37px;
+            height: 37px;
+            border: 1px solid #555;
+            background: #171717;
+            color: #ddd;
+            border-radius: 9px;
+            font-size: 13px;
+            box-shadow: inset 0 1px 2px rgba(255,255,255,.08);
+        }
+
+        .remote-nav .nav-up { top: 0; left: 44px; }
+        .remote-nav .nav-left { top: 44px; left: 0; }
+        .remote-nav .nav-right { top: 44px; right: 0; }
+        .remote-nav .nav-down { bottom: 0; left: 44px; }
+        .remote-nav button[data-action="menu"] { top: 44px; left: 44px; }
+        .remote-nav button[data-action="home"] { bottom: 0; right: 0; }
+
+        .remote-ok {
+            top: 44px;
+            left: 44px;
+            border-radius: 50% !important;
+            background: #252525 !important;
+            font-size: 10px !important;
+            font-weight: 800;
+        }
+
+        .remote-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            margin-top: 9px;
+        }
+
+        .remote-control-btn {
+            width: 58px;
+            height: 38px;
+            border: 1px solid #4d4d4d;
+            border-radius: 10px;
+            background: #151515;
+            color: white;
+            font-size: 17px;
+        }
+
+        .remote-control-btn small {
+            display: block;
+            font: 500 .42rem 'JetBrains Mono', monospace;
+            color: #999;
+        }
+
+        .remote-display {
+            min-width: 75px;
+            text-align: center;
+            color: var(--gold);
+            font: 700 .58rem 'JetBrains Mono', monospace;
+        }
+
+        .remote-youtube {
+            width: 100%;
+            margin-top: 12px;
+            border: 0;
+            border-radius: 10px;
+            padding: 11px;
+            background: #fff;
+            color: #111;
+            font: 800 .62rem 'JetBrains Mono', monospace;
+        }
+
+        .remote-control button {
+            -webkit-tap-highlight-color: transparent;
+            transition: transform .1s, filter .1s;
+        }
+
+        .remote-control button:active,
+        .physical-power:active {
+            transform: scale(.92);
+            filter: brightness(1.35);
+        }
+
+        .tv-display.brightness-low::before,
+        .tv-display.brightness-medium::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 8;
+            pointer-events: none;
+            background: #000;
+        }
+
+        .tv-display.brightness-low::before { opacity: .62; }
+        .tv-display.brightness-medium::before { opacity: .3; }
+
+        @media (max-width: 480px) {
+            .tv-bezel {
+                padding: 8px 8px 11px;
+                border-radius: 13px 13px 8px 8px;
+            }
+
+            .tv-bottom {
+                height: 25px;
+            }
+
+            .remote-control {
+                margin-top: 13px;
+                padding: 12px;
+            }
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="hero-gradient"></div>
+    <div id="matrix" class="matrix-text"></div>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex flex-col items-center justify-center text-center p-6 relative">
+        <div class="gold-border p-6 md:p-16 max-w-4xl">
+            <p class="text-xs md:text-sm font-stats uppercase letter-spacing-widest mb-4 opacity-70">Edição Especial: Atualização 4.2 Ultra Diamond</p>
+            <h1 class="text-5xl md:text-9xl font-black mb-6 leading-tight text-charcoal">
+                42: <br> <span class="text-gold">A Versão Suprema</span>
+            </h1>
+            <p class="text-lg md:text-2xl italic max-w-2xl mx-auto opacity-80">
+                Tu não estás apenas a completar anos... estás a atingir o nível máximo de genialidade e carinho.
+            </p>
+        </div>
+        <div class="mt-12 animate-bounce">
+            <svg class="w-6 h-6 text-charcoal opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+        </div>
+    </section>
+
+    <div class="gradient-divider bg-gradient-to-b from-cream to-pitch"></div>
+
+    <!-- The Comparison -->
+    <section id="reveal" class="reveal-section min-h-screen flex flex-col items-center justify-center p-6 bg-pitch text-cream">
+        <div class="max-w-4xl w-full text-center">
+            <h2 class="text-4xl md:text-6xl font-bold mb-12">A Coincidência do Século</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+                <div class="p-6 border-2 border-cream/20 rounded-2xl bg-cream/5 backdrop-blur-sm">
+                    <p class="font-stats text-gold mb-2">ATLETA</p>
+                    <h3 class="text-2xl md:text-3xl font-bold mb-4">Cristiano Ronaldo</h3>
+                    <p class="text-5xl font-black font-stats">42</p>
+                    <p class="mt-2 opacity-60 italic">Especialista em Golos</p>
+                </div>
+
+                <div class="p-6 border-4 border-gold rounded-2xl bg-cream/10 backdrop-blur-sm scale-105 md:scale-110 shadow-2xl">
+                    <p class="font-stats text-gold mb-2">MENTORA</p>
+                    <h3 class="text-2xl md:text-3xl font-bold mb-4">Minha Tia</h3>
+                    <p class="text-5xl font-black font-stats">42</p>
+                    <p class="mt-2 opacity-80 italic font-bold">Especialista em Tudo</p>
+                </div>
+            </div>
+
+            <p class="mt-12 md:mt-16 text-xl md:text-3xl italic font-light leading-relaxed max-w-3xl mx-auto">
+                "Sim, tu tens a mesma idade do CR7. Mas convenhamos: quem é que consegue criar a melhor estratégia de marketing e ainda ser o apoio mais incrível da família ao mesmo tempo?"
+            </p>
+        </div>
+    </section>
+
+    <div class="gradient-divider bg-gradient-to-b from-pitch to-charcoal"></div>
+
+    <!-- REALISTIC SMART TV SECTION -->
+    <section id="tvSection" class="reveal-section min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 bg-charcoal text-cream relative overflow-hidden">
+        <div class="text-center mb-8 z-10">
+            <div class="font-stats text-xs tracking-[0.25em] uppercase opacity-50 mb-3">SMART TV • TIA_ULTRA_42_HD</div>
+            <h2 class="text-4xl sm:text-6xl font-bold mb-3">Samsung Premiere</h2>
+            <p id="tvSubtitle" class="text-base sm:text-xl opacity-70 font-stats">
+                Toca no ecrã para ligar a televisão
+            </p>
+        </div>
+
+        <div class="smart-tv-wrap w-full max-w-3xl">
+            <div class="smart-tv" id="smartTv">
+                <div class="tv-bezel">
+                    <div class="tv-top-glow"></div>
+
+                    <div class="tv-display" id="tvDisplay">
+                        <div class="tv-off-screen" id="tvOffScreen">
+                            <div class="tv-brand">SAMSUNG</div>
+                            <div class="power-symbol">⏻</div>
+                            <p>Toca para ligar</p>
+                        </div>
+
+                        <div class="tv-home-screen" id="tvHomeScreen">
+                            <div class="tv-statusbar">
+                                <span>20:15</span>
+                                <span>● 5G &nbsp; ◉ 61%</span>
+                            </div>
+
+                            <div class="tv-youtube-frame">
+                                <iframe
+                                    id="youtubePlayer"
+                                    title="Vídeo de aniversário"
+                                    src="https://www.youtube-nocookie.com/embed/KWSQhp5g4eM?enablejsapi=1&playsinline=1&rel=0&modestbranding=1"
+                                    frameborder="0"
+                                    allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                                    allowfullscreen>
+                                </iframe>
+                                <div class="tv-video-loading" id="tvVideoLoading">
+                                    <div class="loading-spinner"></div>
+                                    <span>A iniciar transmissão...</span>
+                                </div>
+                            </div>
+
+                            <div class="tv-home-info">
+                                <div>
+                                    <span class="live-dot"></span>
+                                    AO VIVO • TIA ULTRA
+                                </div>
+                                <strong>Uma mensagem especial para a Tia ❤️</strong>
+                            </div>
+                        </div>
+
+                        <div class="tv-volume-osd" id="tvVolumeOSD">
+                            <span>🔊</span>
+                            <div class="osd-bar"><div id="osdVolumeFill"></div></div>
+                            <b id="osdVolumeText">50</b>
+                        </div>
+
+                        <div class="tv-brightness-osd" id="tvBrightnessOSD">
+                            <span>☀️</span>
+                            <div class="osd-bar"><div id="osdBrightnessFill"></div></div>
+                            <b id="osdBrightnessText">100</b>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tv-bottom">
+                    <span class="samsung-logo-small">SAMSUNG</span>
+                    <button id="tvPhysicalPower" class="physical-power" aria-label="Ligar ou desligar TV">⏻</button>
+                </div>
+
+                <div class="tv-led" id="tvLed"></div>
+            </div>
+
+            <!-- Mobile TV remote -->
+            <div class="remote-control" id="remoteControl">
+                <div class="remote-head">
+                    <span>SMART REMOTE</span>
+                    <span id="remotePowerDot" class="remote-power-dot"></span>
+                </div>
+
+                <button class="remote-power" id="remotePower" aria-label="Ligar ou desligar">⏻</button>
+
+                <div class="remote-nav">
+                    <button class="remote-btn" data-action="menu">☰</button>
+                    <button class="remote-btn nav-up" data-action="up">▲</button>
+                    <button class="remote-btn nav-left" data-action="left">◀</button>
+                    <button class="remote-ok" data-action="ok">OK</button>
+                    <button class="remote-btn nav-right" data-action="right">▶</button>
+                    <button class="remote-btn nav-down" data-action="down">▼</button>
+                    <button class="remote-btn" data-action="home">⌂</button>
+                </div>
+
+                <div class="remote-row">
+                    <button class="remote-control-btn" id="volumeDown">−<small>VOL</small></button>
+                    <button class="remote-control-btn" id="muteBtn">🔇</button>
+                    <button class="remote-control-btn" id="volumeUp">+<small>VOL</small></button>
+                </div>
+
+                <div class="remote-row">
+                    <button class="remote-control-btn" id="brightnessDown">−<small>BRI</small></button>
+                    <div class="remote-display" id="remoteDisplay">VOL 50</div>
+                    <button class="remote-control-btn" id="brightnessUp">+<small>BRI</small></button>
+                </div>
+
+                <button class="remote-youtube" id="remotePlay">▶ &nbsp; REPRODUZIR VÍDEO</button>
+            </div>
+        </div>
+
+        <p class="mt-7 italic opacity-40 font-stats text-xs sm:text-sm text-center">
+            O vídeo é reproduzido dentro do ecrã da televisão • volume e brilho simulados
+        </p>
+    </section>
+
+    <div class="gradient-divider bg-gradient-to-b from-charcoal to-cream"></div>
+
+    <!-- Professional Admiration Section -->
+    <section class="reveal-section min-h-screen flex flex-col items-center justify-center p-6 bg-cream relative">
+        <div class="max-w-5xl w-full">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-6xl font-bold mb-4">A Mente Estratégica</h2>
+                <p class="text-xl opacity-70">Onde o marketing se torna arte</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-8 rounded-3xl bg-white dark:bg-gray-800 shadow-xl border-b-8 border-samsung-blue samsung-glow">
+                    <div class="text-4xl mb-4">📈</div>
+                    <h3 class="text-2xl font-bold mb-2">Visão Global</h3>
+                    <p class="opacity-80">Liderar o marketing na Samsung exige mais do que talento; exige a visão que tu tens. Tu não segues tendências, tu as crias.</p>
+                </div>
+                <div class="p-8 rounded-3xl bg-white dark:bg-gray-800 shadow-xl border-b-8 border-gold">
+                    <div class="text-4xl mb-4">✨</div>
+                    <h3 class="text-2xl font-bold mb-2">Impacto Real</h3>
+                    <p class="opacity-80">A tua capacidade de transformar ideias em resultados é inspiradora. O teu trabalho deixa a marca de quem sabe exatamente onde quer chegar.</p>
+                </div>
+                <div class="p-8 rounded-3xl bg-white dark:bg-gray-800 shadow-xl border-b-8 border-pitch">
+                    <div class="text-4xl mb-4">💎</div>
+                    <h3 class="text-2xl font-bold mb-2">Inspiração</h3>
+                    <p class="opacity-80">Mais do que a tua carreira, é a tua determinação que nos motiva. És a prova de que a competência e a bondade andam juntas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="gradient-divider bg-gradient-to-b from-cream to-pitch"></div>
+
+    <!-- THE "TIRED" JOKE SECTION -->
+    <section class="reveal-section min-h-screen flex flex-col items-center justify-center p-6 bg-pitch text-white relative">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl md:text-6xl font-bold mb-4">Expectativa vs. Realidade</h2>
+            <p class="text-xl opacity-70 font-stats">O lado "oculto" do Marketing Ultra</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl w-full items-center">
+            <div class="p-6 bg-white/10 rounded-3xl border-2 border-gold/30 text-center">
+                <p class="font-stats text-gold mb-4 uppercase">Expectativa: A CEO Implacável</p>
+                <div class="text-8xl mb-4">💅</div>
+                <p class="opacity-80 italic">"Tudo sob controlo, a campanha é um sucesso, o café está perfeito."</p>
+            </div>
+            <div class="p-6 bg-white/10 rounded-3xl border-2 border-red-500/30 text-center relative overflow-hidden">
+                <p class="font-stats text-red-400 mb-4 uppercase">Realidade: O Colapso do Ecrã</p>
+                <div class="text-8xl mb-4 animate-bounce">😴</div>
+                <p class="opacity-80 italic">"Só mais um email... mas o computador parece que está a falar chinês... quero dormir 100 anos."</p>
+                <div class="absolute inset-0 bg-red-500/5 pointer-events-none"></div>
+            </div>
+        </div>
+        <p class="mt-12 text-xl md:text-2xl italic opacity-70 text-center max-w-2xl">
+            "Até as lendas precisam de um descanso (e de um café bem forte)!"
+        </p>
+    </section>
+
+    <div class="gradient-divider bg-gradient-to-b from-pitch to-samsung"></div>
+
+    <!-- NEW JOKE 1: CORPORATE TRANSLATOR - HIGH END VERSION -->
+    <section class="reveal-section min-h-screen flex flex-col items-center justify-center p-6 bg-samsung text-white relative">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl md:text-6xl font-bold mb-4">Tradutor de Marketing</h2>
+            <p class="text-xl opacity-70 font-stats">O que a Samsung diz vs. O que a Tia pensa</p>
+        </div>
+
+        <div class="max-w-2xl w-full space-y-8">
+            <div class="translator-card p-6 text-charcoal cursor-pointer" onclick="revealTranslation(this)">
+                <p class="font-stats text-xs font-black uppercase mb-2 corp-label" style="color: #034EA2 !important;">📢 FRASE CORPORATIVA:</p>
+                <p class="text-xl font-bold mb-4 corp-text text-gray-900">"Vamos alinhar as sinergias para otimizar o roadmap do Q4."</p>
+                <div class="translator-truth">
+                    <span class="truth-badge">A Verdade da Tia</span>
+                    <p class="text-gold font-black italic text-xl">"Vou organizar isto tudo num piscar de olhos e deixar tudo impecável, como sempre!"</p>
+                </div>
+            </div>
+            <div class="translator-card p-6 text-charcoal cursor-pointer" onclick="revealTranslation(this)">
+                <p class="font-stats text-xs font-black uppercase mb-2 corp-label" style="color: #034EA2 !important;">📢 FRASE CORPORATIVA:</p>
+                <p class="text-xl font-bold mb-4 corp-text text-gray-900">"Estamos a pivotar a nossa abordagem para um ecossistema mais disruptivo."</p>
+                <div class="translator-truth">
+                    <span class="truth-badge">A Verdade da Tia</span>
+                    <p class="text-gold font-black italic text-xl">"Vou criar a próxima tendência global agora mesmo, porque eu domino isto!"</p>
+                </div>
+            </div>
+            <div class="translator-card p-6 text-charcoal cursor-pointer" onclick="revealTranslation(this)">
+                <p class="font-stats text-xs font-black uppercase mb-2 corp-label" style="color: #034EA2 !important;">📢 FRASE CORPORATIVA:</p>
+                <p class="text-xl font-bold mb-4 corp-text text-gray-900">"Agradecemos o vosso feedback e vamos analisar internamente."</p>
+                <div class="translator-truth">
+                    <span class="truth-badge">A Verdade da Tia</span>
+                    <p class="text-gold font-black italic text-xl">"Já sei a solução perfeita, vou apenas dar o meu toque final de génio!"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="gradient-divider bg-gradient-to-b from-samsung to-pitch"></div>
+
+    <!-- NEW JOKE 2: PATIENCE METER -->
+    <section class="reveal-section min-h-screen flex flex-col items-center justify-center p-6 bg-pitch text-white relative">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl md:text-6xl font-bold mb-4">Medidor de Paciência</h2>
+            <p class="text-xl opacity-70 font-stats">Análise de stress em tempo real</p>
+        </div>
+
+        <div class="max-w-xl w-full text-center space-y-12">
+            <div class="meter-container mx-auto">
+                <div id="patienceFill" class="meter-fill"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <button onclick="drainPatience('O meu Wi-Fi não funciona!')" class="bg-white/10 p-4 rounded-xl hover:bg-white/20 transition font-stats text-sm">
+                    🆘 "O meu Wi-Fi não funciona!"
+                </button>
+                <button onclick="drainPatience('Como é que se faz um PDF?')" class="bg-white/10 p-4 rounded-xl hover:bg-white/20 transition font-stats text-sm">
+                    📄 "Como é que se faz um PDF?"
+                </button>
+                <button onclick="drainPatience('O meu telemóvel está lento!')" class="bg-white/10 p-4 rounded-xl hover:bg-white/20 transition font-stats text-sm">
+                    🐌 "O meu telemóvel está lento!"
+                </button>
+                <button onclick="refillPatience()" class="bg-gold text-charcoal p-4 rounded-xl font-bold hover:bg-yellow-500 transition font-stats text-sm">
+                    ❤️ DAR UM ABRAÇO À TIA
+                </button>
+            </div>
+            <p id="patienceStatus" class="text-2xl italic text-gold font-bold">Paciência: 100% (Modo Zen)</p>
+        </div>
+    </section>
+
+    <div class="gradient-divider bg-gradient-to-b from-pitch to-samsung"></div>
+
+    <!-- IMPROVED OMNIPOTENCE SIMULATOR SECTION -->
+    <section class="reveal-section min-h-screen flex flex-col items-center justify-center p-6 bg-samsung text-white relative overflow-hidden">
+        <div class="text-center mb-12 z-10">
+            <h2 class="text-4xl md:text-6xl font-bold mb-4">Simulador de Omnipotência da Tia</h2>
+            <p class="text-xl opacity-70 font-stats">Atenção: O poder de processamento é infinito</p>
+        </div>
+
+        <div class="sim-panel p-6 md:p-12 rounded-3xl max-w-4xl w-full z-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <button onclick="triggerMagic('tech')" class="sim-btn btn-tech p-6 rounded-2xl font-bold text-center uppercase font-stats flex flex-col items-center gap-2 shadow-lg">
+                <span class="text-3xl">💡</span>
+                <span>Conselho de Ouro</span>
+                <span class="text-xs opacity-70 font-normal lowercase">Modo Apoio Incondicional</span>
+            </button>
+            <button onclick="triggerMagic('marketing')" class="sim-btn btn-marketing p-6 rounded-2xl font-bold text-center uppercase font-stats flex flex-col items-center gap-2 shadow-lg">
+                <span class="text-3xl">✨</span>
+                <span>Campanha Viral</span>
+                <span class="text-xs opacity-70 font-normal lowercase">Modo Marketing Samsung</span>
+            </button>
+            <button onclick="triggerMagic('love')" class="sim-btn btn-love p-6 rounded-2xl font-bold text-center uppercase font-stats flex flex-col items-center gap-2 shadow-lg">
+                <span class="text-3xl">❤️</span>
+                <span>Amor Infinito</span>
+                <span class="text-xs opacity-70 font-normal lowercase">Modo Tia Lendária</span>
+            </button>
+            <button onclick="triggerMagic('siuu')" class="sim-btn btn-siuu p-6 rounded-2xl font-bold text-center uppercase font-stats flex flex-col items-center gap-2 shadow-lg">
+                <span class="text-3xl">⚽</span>
+                <span>Modo CR7</span>
+                <span class="text-xs opacity-70 font-normal lowercase">Modo 42 Anos</span>
+            </button>
+        </div>
+
+        <div id="sim-status" class="mt-12 font-stats text-xl text-gold animate-pulse text-center">Aguardando comando...</div>
+    </section>
+
+    <div class="gradient-divider bg-gradient-to-b from-samsung to-samsung"></div>
+
+    <!-- Support Center Joke -->
+    <section class="reveal-section min-h-screen flex flex-col items-center justify-center p-6 bg-samsung text-white">
+        <div class="max-w-3xl w-full text-center border-4 border-white/30 p-12 rounded-3xl backdrop-blur-md bg-white/10">
+            <h2 class="text-4xl md:text-6xl font-bold mb-8">Centro de Apoio "Tia Ultra"</h2>
+            <div class="font-stats text-left bg-black/30 p-6 rounded-xl mb-8 border-l-4 border-gold">
+                <p class="mb-2"><span class="text-gold">Ticket #001:</span> "Como faço para isto parecer profissional?" <br> <span class="text-green-400">➔ Tia resolveu com um toque de génio.</span></p>
+                <p class="mb-2"><span class="text-gold">Ticket #002:</span> "A campanha não está a converter!" <br> <span class="text-green-400">➔ Tia reestruturou a estratégia e dominou o mercado.</span></p>
+                <p><span class="text-gold">Ticket #003:</span> "Preciso de um conselho de vida!" <br> <span class="text-green-400">➔ Tia ativou o modo 'Sabedoria Infinita'.</span></p>
+            </div>
+            <p class="text-2xl italic opacity-90">
+                "O CR7 pode ter a Bola de Ouro, mas tu tens o Suporte de Ouro."
+            </p>
+        </div>
+    </section>
+
+    <div class="gradient-divider bg-gradient-to-b from-samsung to-cream"></div>
+
+    <!-- Footer/Wishes -->
+    <footer class="min-h-screen flex flex-col items-center justify-center p-6 text-center bg-cream">
+        <div class="max-w-3xl">
+            <h2 class="text-5xl md:text-7xl font-black mb-8 text-gold">Parabéns!</h2>
+            <p class="text-2xl md:text-3xl leading-relaxed mb-12 opacity-80">
+                Que os teus 42 anos sejam tão brilhantes quanto um ecrã AMOLED e tão inspiradores quanto a tua carreira.
+                Tu és a melhor pessoa que conheço, a minha maior referência e a tia mais incrível do mundo.
+                Gosto imenso de ti!
+            </p>
+            <div class="gold-border inline-block px-8 py-4 font-stats uppercase text-sm tracking-widest">
+                Com todo o meu amor e admiração ❤️
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    if (entry.target.id === 'tvSection') {
+                        setTimeout(() => {
+                            document.getElementById('tvContainer').classList.add('tv-power-on');
+                        }, 500);
+                    }
+                }
+            });
+        }, { threshold: 0.2 });
+
+        document.querySelectorAll('.reveal-section').forEach(section => {
+            observer.observe(section);
+        });
+
+
+
+        // TRANSLATOR LOGIC - New Interactive Version
+        function revealTranslation(card) {
+            card.classList.toggle('revealed');
+            const truth = card.querySelector('.translator-truth');
+            if (card.classList.contains('revealed')) {
+                truth.style.maxHeight = '300px';
+                truth.style.opacity = '1';
+            } else {
+                truth.style.maxHeight = '0';
+                truth.style.opacity = '0';
+            }
+        }
+
+        // PATIENCE LOGIC
+        let currentPatience = 100;
+        function drainPatience(reason) {
+            currentPatience = Math.max(0, currentPatience - 25);
+            updatePatienceUI(reason);
+        }
+        function refillPatience() {
+            currentPatience = 100;
+            updatePatienceUI("SISTEMA RESTAURADO COM AMOR!");
+        }
+        function updatePatienceUI(message) {
+            const fill = document.getElementById('patienceFill');
+            const status = document.getElementById('patienceStatus');
+            fill.style.width = currentPatience + '%';
+            status.innerText = `Paciência: ${currentPatience}% - ${message}`;
+            if (currentPatience < 30) {
+                document.body.classList.add('screen-shake');
+                setTimeout(() => document.body.classList.remove('screen-shake'), 500);
+            }
+        }
+
+        // SIMULATOR LOGIC
+        function triggerMagic(type) {
+            const status = document.getElementById('sim-status');
+            const body = document.body;
+
+            if (type === 'tech') {
+                status.innerText = "ANALISANDO SITUAÇÃO E DANDO O MELHOR CONSELHO...";
+                spawnEmojis('💡');
+                spawnEmojis('🌟');
+                setTimeout(() => status.innerText = "✅ PROBLEMA RESOLVIDO COM SABEDORIA! TIA POWER!", 2000);
+
+            } else if (type === 'marketing') {
+                status.innerText = "ATIVANDO MAGIA de MARKETING SAMSUNG...";
+                spawnEmojis('✨');
+                spawnEmojis('📱');
+                spawnEmojis('💰');
+                setTimeout(() => status.innerText = "🚀 CAMPANHA VIRAL! MERCADO DOMINADO!", 2000);
+
+            } else if (type === 'love') {
+                status.innerText = "DESBLOQUEANDO AMOR INCONDICIONAL...";
+                spawnEmojis('❤️');
+                spawnEmojis('🌸');
+                spawnEmojis('🥰');
+                setTimeout(() => status.innerText = "💖 CORAÇÃO CHEIO! TIA É a MELHOR!", 2000);
+
+            } else if (type === 'siuu') {
+                status.innerText = "MODO 42 ANOS: ATIVANDO SIUUUUU!";
+                spawnEmojis('⚽');
+                spawnEmojis('🏆');
+                spawnEmojis('🐐');
+                setTimeout(() => status.innerText = "⚽ SIUUUUUUUU! TIA... UMA LENDA IMPLACÁVEL!!", 2000);
+            }
+        }
+
+        function spawnEmojis(emoji) {
+            for (let i = 0; i < 15; i++) {
+                const el = document.createElement('div');
+                el.className = 'floating-emoji';
+                el.innerText = emoji;
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.top = (Math.random() * 50 + 50) + 'vh';
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 2000);
+            }
+        }
+
+        function createConfetti() {
+            const colors = ['#D4AF37', '#FBCFE8', '#034EA2', '#FFFFFF', '#064E3B'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-10px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                document.body.appendChild(confetti);
+
+                const duration = 3 + Math.random() * 4;
+                const animation = confetti.animate([
+                    { transform: `translate(0, 0) rotate(0deg)`, opacity: 1 },
+                    { transform: `translate(${(Math.random() - 0.5) * 200}px, ${window.innerHeight + 20}px) rotate(${Math.random() * 720}deg)`, opacity: 0 }
+                ], {
+                    duration: duration * 1000,
+                    easing: 'cubic-bezier(0, .9, .57, 1)'
+                });
+
+                animation.onfinish = () => confetti.remove();
+            }
+        }
+
+        function createFootball() {
+            const ball = document.createElement('div');
+            ball.className = 'football';
+            ball.innerHTML = '⚽';
+            ball.style.fontSize = '20px';
+            ball.style.left = Math.random() * 100 + 'vw';
+            ball.style.top = '-30px';
+            document.body.appendChild(ball);
+
+            const animation = ball.animate([
+                { transform: `translate(0, 0) rotate(0deg)`, opacity: 0.3 },
+                { transform: `translate(${(Math.random() - 0.5) * 300}px, ${window.innerHeight + 50}px) rotate(720deg)`, opacity: 0 }
+            ], {
+                duration: 5000 + Math.random() * 3000,
+                easing: 'linear'
+            });
+
+            animation.onfinish = () => ball.remove();
+        }
+
+
+        // REALISTIC SMART TV CONTROLLER
+        const smartTv = document.getElementById('smartTv');
+        const tvDisplay = document.getElementById('tvDisplay');
+        const tvSubtitle = document.getElementById('tvSubtitle');
+        const youtubePlayer = document.getElementById('youtubePlayer');
+        const tvVideoLoading = document.getElementById('tvVideoLoading');
+        const remotePowerDot = document.getElementById('remotePowerDot');
+        const remoteDisplay = document.getElementById('remoteDisplay');
+
+        let tvIsOn = false;
+        let volume = 50;
+        let brightness = 100;
+        let muted = false;
+
+        function sendYouTubeCommand(func, args = []) {
+            if (!youtubePlayer || !youtubePlayer.contentWindow) return;
+            youtubePlayer.contentWindow.postMessage(JSON.stringify({
+                event: 'command',
+                func,
+                args
+            }), '*');
+        }
+
+        function powerTV() {
+            tvIsOn = !tvIsOn;
+            smartTv.classList.toggle('tv-on', tvIsOn);
+            remotePowerDot.classList.toggle('on', tvIsOn);
+
+            if (tvIsOn) {
+                tvSubtitle.innerText = "Transmissão iniciada • toca no ecrã para controlar";
+                tvVideoLoading.style.opacity = '1';
+                setTimeout(() => {
+                    tvVideoLoading.style.opacity = '0';
+                    sendYouTubeCommand('playVideo');
+                }, 1200);
+            } else {
+                tvSubtitle.innerText = "Toca no ecrã para ligar a televisão";
+                sendYouTubeCommand('pauseVideo');
+            }
+        }
+
+        function showOSD(type) {
+            const volumeOsd = document.getElementById('tvVolumeOSD');
+            const brightnessOsd = document.getElementById('tvBrightnessOSD');
+            volumeOsd.classList.remove('show');
+            brightnessOsd.classList.remove('show');
+
+            const el = type === 'volume' ? volumeOsd : brightnessOsd;
+            el.classList.add('show');
+            clearTimeout(window.osdTimer);
+            window.osdTimer = setTimeout(() => el.classList.remove('show'), 1100);
+        }
+
+        function setVolume(value) {
+            volume = Math.max(0, Math.min(100, value));
+            if (volume === 0) muted = true;
+            else muted = false;
+
+            document.getElementById('osdVolumeFill').style.width = volume + '%';
+            document.getElementById('osdVolumeText').innerText = volume;
+            remoteDisplay.innerText = muted ? 'MUTED' : 'VOL ' + volume;
+
+            sendYouTubeCommand('setVolume', [volume]);
+            if (muted) sendYouTubeCommand('mute');
+            else sendYouTubeCommand('unMute');
+            showOSD('volume');
+        }
+
+        function setBrightness(value) {
+            brightness = Math.max(20, Math.min(100, value));
+            tvDisplay.classList.remove('brightness-low', 'brightness-medium');
+
+            if (brightness < 50) tvDisplay.classList.add('brightness-low');
+            else if (brightness < 80) tvDisplay.classList.add('brightness-medium');
+
+            document.getElementById('osdBrightnessFill').style.width = brightness + '%';
+            document.getElementById('osdBrightnessText').innerText = brightness;
+            remoteDisplay.innerText = 'BRI ' + brightness;
+            showOSD('brightness');
+        }
+
+        function startVideo() {
+            if (!tvIsOn) powerTV();
+            else {
+                sendYouTubeCommand('playVideo');
+                tvVideoLoading.style.opacity = '0';
+            }
+        }
+
+        // Click directly on the TV screen: power on, then play inside the TV.
+        tvDisplay.addEventListener('click', startVideo);
+        document.getElementById('remotePower').addEventListener('click', powerTV);
+        document.getElementById('tvPhysicalPower').addEventListener('click', powerTV);
+
+        document.getElementById('volumeDown').addEventListener('click', () => setVolume(volume - 10));
+        document.getElementById('volumeUp').addEventListener('click', () => setVolume(volume + 10));
+
+        document.getElementById('muteBtn').addEventListener('click', () => {
+            muted = !muted;
+            if (muted) sendYouTubeCommand('mute');
+            else sendYouTubeCommand('unMute');
+            remoteDisplay.innerText = muted ? 'MUTED' : 'VOL ' + volume;
+            showOSD('volume');
+        });
+
+        document.getElementById('brightnessDown').addEventListener('click', () => setBrightness(brightness - 10));
+        document.getElementById('brightnessUp').addEventListener('click', () => setBrightness(brightness + 10));
+        document.getElementById('remotePlay').addEventListener('click', startVideo);
+
+        document.querySelectorAll('.remote-nav button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (!tvIsOn) powerTV();
+                else startVideo();
+            });
+        });
+
+        // YouTube IFrame API-style handshake for the player.
+        window.addEventListener('message', (event) => {
+            if (typeof event.data !== 'string') return;
+            if (event.data.includes('"infoDelivery"') || event.data.includes('"onStateChange"')) {
+                tvVideoLoading.style.opacity = '0';
+            }
+        });
+
+        window.onload = () => {
+            createConfetti();
+            setInterval(createFootball, 2000);
+            setVolume(50);
+            setBrightness(100);
+            tvIsOn = false;
+            smartTv.classList.remove('tv-on');
+            remotePowerDot.classList.remove('on');
+        };
+    </script>
+</body>
+</html>
